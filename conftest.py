@@ -34,7 +34,11 @@ def browser(request):
 
 @pytest.fixture(scope="class")
 def language(request):
-     return request.config.getoption("--language")
+    user_language = request.config.getoption("language")
+    if user_language == None:
+        raise pytest.UsageError("--Input language!")
+    else:
+        return request.config.getoption("--language")
 
 
 def pytest_runtest_makereport(item, call):
